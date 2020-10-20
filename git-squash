@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  echo 1>&2 "Usage: git squash <branch>"
+  echo 1>&2 ""
+  echo 1>&2 "Examples"
+  echo 1>&2 "- git squash main"
+}
+
+die() {
+  echo "${1}"
+  exit 1
+}
+
+if [[ "${#}" -ne 1 ]]; then
+  usage
+  exit 1
+fi
+
+target_branch="${1}"
+
+# should we exit or instead do stash -all :)
+if [[ -n "$(git status --porcelain)" ]]; then
+  die "Dirty git repo. You will have to commit all the changes before squashing"
+fi
+
+if ! git rev-parse --quiet --verify "${target_branch}" 2> /dev/null; then
+  die "Target branch '${target_branch}' does not exist"
+fi
+
+first_commit_sha=$(git log "${target_branch}".. --reverse --no-merges --pretty=format:%H | head -1)
+
+if [[ ! -n "${first_commit_sha}" ]]; then
+  die "There are no commits for squashing"
+fi
+
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+tmp_branch="git-squash-tmp-$(date +%s)"
+
+cleanup() {
+  git branch --quiet --delete --force "${tmp_branch}"
+}
+
+# delete temporary branch all the time
+trap cleanup EXIT
+
+git checkout --quiet -B "${tmp_branch}" "${target_branch}"
+git merge --squash "${current_branch}"
+git add -A
+git commit --quiet -c "${first_commit_sha}"
+git checkout --quiet "${current_branch}"
+git reset --quiet --hard "${tmp_branch}"
