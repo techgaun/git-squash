@@ -8,7 +8,7 @@
 ### Global installation
 
 ```shell
-curl https://raw.githubusercontent.com/techgaun/git-squash/master/git-squash -O /usr/local/bin/git-squash && chmod +x /usr/local/bin/git-squash
+curl https://raw.githubusercontent.com/techgaun/git-squash/main/git-squash -O /usr/local/bin/git-squash && chmod +x /usr/local/bin/git-squash
 ```
 
 ### Local installation
@@ -16,7 +16,7 @@ curl https://raw.githubusercontent.com/techgaun/git-squash/master/git-squash -O 
 Assuming the local path ($HOME/.bin in this example) is in `$PATH`:
 
 ```shell
-curl https://raw.githubusercontent.com/techgaun/git-squash/master/git-squash -O "${HOME}"/.bin/git-squash && chmod u+x "${HOME}"/.bin/git-squash
+curl https://raw.githubusercontent.com/techgaun/git-squash/main/git-squash -O "${HOME}"/.bin/git-squash && chmod u+x "${HOME}"/.bin/git-squash
 ```
 
 ## Usage
