@@ -8,7 +8,7 @@
 ### Global installation
 
 ```shell
-curl https://raw.githubusercontent.com/techgaun/git-squash/main/git-squash -o /usr/local/bin/git-squash && chmod +x /usr/local/bin/git-squash
+sudo curl https://raw.githubusercontent.com/techgaun/git-squash/main/git-squash -o /usr/local/bin/git-squash && sudo chmod +x /usr/local/bin/git-squash
 ```
 
 ### Local installation
